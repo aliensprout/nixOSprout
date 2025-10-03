@@ -19,7 +19,7 @@
       devShells.${system}.default = pkgs.mkShell {
         packages = with pkgs; [
           alacritty
-          qtile
+          python3Packages.qtile
           rofi
           picom
           xwallpaper
