@@ -36,12 +36,7 @@
     autoRepeatDelay = 200;
     autoRepeatInterval = 35;
     windowManager.qtile.enable = true;
-    xresources = {
-      enable = true;
-      settings = ''
-        Xft.dpi: 192
-      '';
-    };
+    dpi = 192;
   };
   services.displayManager.ly.enable = true;
 
