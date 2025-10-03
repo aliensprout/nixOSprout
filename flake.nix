@@ -1,27 +1,46 @@
 {
-    description = "yung alien sprout";
-    inputs = {
-        nixpkgs.url = "nixpkgs/nixos-25.05";
-        home-manager = {
-            url = "github:nix-community/home-manager/release-25.05";
-            inputs.nixpkgs.follows = "nixpkgs";
-        };
+  description = "yung alien sprout";
+  inputs = {
+    nixpkgs.url = "nixpkgs/nixos-25.05";
+    home-manager = {
+      url = "github:nix-community/home-manager/release-25.05";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
+  };
 
-    outputs = { self, nixpkgs, home-manager, ... }: {
-     nixosConfigurations.aliensprout = nixpkgs.lib.nixosSystem {
+  outputs = { self, nixpkgs, home-manager, ... }:
+
+    let
+      system = "x86_64-linux";
+      pkgs = import nixpkgs { inherit system; };
+    in
+
+    {
+      devShells.${system}.default = pkgs.mkShell {
+        packages = with pkgs; [
+          alacritty
+          qtile
+          rofi
+          picom
+          xwallpaper
+          neovim
+          git
+        ];
+      };
+
+      nixosConfigurations.aliensprout = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = [ 
-            ./configuration.nix
-            home-manager.nixosModules.home-manager
-            {
-                home-manager = { 
-                    useGlobalPkgs = true;
-                    useUserPackages = true;
-                    users.wes = import ./home.nix;
-                    backupFileExtension = "backup";
-                };
-            }
+        modules = [
+          ./configuration.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.wes = import ./home.nix;
+              backupFileExtension = "backup";
+            };
+          }
         ];
       };
     };
