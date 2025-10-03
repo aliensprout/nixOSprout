@@ -33,6 +33,13 @@ in
     userEmail = "230080509+aliensprout@users.noreply.github.com";
   };
 
+  programs. firefox = {
+    enable = true;
+    extraPrefs = {
+      "layout.css.devPixelsPerPx" = "0";
+    };
+  };
+
   xdg.configFile = builtins.mapAttrs
     (name: subpath: {
       source = create_symlink "${dotfiles}/${subpath}";
@@ -40,7 +47,14 @@ in
     })
     configs;
 
-
+  home.file.".config/rofi/config.rasi" = {
+    text = ''
+      configuration {
+        dpi: 192;
+        font: "AtkinsonMono Nerd Font"
+      }
+    '';
+  };
   #   xdg.configFile."qtile" = { 
   #       source = create_symlink "${dotfiles}/qtile/";
   #       recursive = true;
