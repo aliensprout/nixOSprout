@@ -33,13 +33,6 @@ in
     userEmail = "230080509+aliensprout@users.noreply.github.com";
   };
 
-  programs. firefox = {
-    enable = true;
-    extraPrefs = {
-      "layout.css.devPixelsPerPx" = "0";
-    };
-  };
-
   xdg.configFile = builtins.mapAttrs
     (name: subpath: {
       source = create_symlink "${dotfiles}/${subpath}";

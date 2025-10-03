@@ -75,7 +75,12 @@
     ];
   };
 
-  programs.firefox.enable = true;
+  programs.firefox = {
+    enable = true;
+    preferences = {
+      "layout.css.devPixelsPerPx" = 0;
+    };
+  };
 
   environment.systemPackages = with pkgs; [
     vim
